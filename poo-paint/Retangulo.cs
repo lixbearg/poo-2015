@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -37,6 +38,10 @@ namespace poo_paint
         {
             return pcontador;
         }
-
+        
+        public override void Desenha(Graphics g)
+        {
+            g.DrawRectangle(Pens.Black, px, py, plargura, paltura);
+        }
     }
 }
