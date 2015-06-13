@@ -14,6 +14,8 @@ namespace poo_paint
     {
         private static int qtdfiguras = 0;
         Figura[] figuras = new Figura[0];
+        private int xinicial;
+        private int yinicial;
 
         public AreaDeDesenho()
         {
@@ -38,10 +40,38 @@ namespace poo_paint
             }
         }
 
-        public void AdicionarFigura(Figura f)
+        private void DesenhaCliqueInicial(object sender, MouseEventArgs e)
         {
+            xinicial = e.X;
+            yinicial = e.Y;
+        }
 
+        private void DesenhaCliqueFinal(object sender, MouseEventArgs e)
+        {
+            if (e.X > xinicial)
+            {                
+                if (e.Y > yinicial)
+                {
+                    AdicionaFigura(new Retangulo(xinicial, yinicial, (e.X - xinicial), (e.Y - yinicial)));
+                }
+                else
+                {
+                    AdicionaFigura(new Retangulo(xinicial, e.Y, (e.X - xinicial), (yinicial - e.Y)));
+                }
+            }
+            else
+            {
+                if (e.Y > yinicial)
+                {
+                    AdicionaFigura(new Retangulo(e.X, yinicial, (xinicial - e.X), (e.Y - yinicial)));
+                }
+                else
+                {
+                    AdicionaFigura(new Retangulo(e.X, e.Y, (xinicial - e.X), (yinicial - e.Y)));
+                }
+            }
 
+            this.Invalidate();
         }
     }
 }

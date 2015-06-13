@@ -38,6 +38,8 @@
             this.Name = "AreaDeDesenho";
             this.Text = "AreaDeDesenho";
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.Desenha);
+            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.DesenhaCliqueInicial);
+            this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.DesenhaCliqueFinal);
             this.ResumeLayout(false);
 
         }
