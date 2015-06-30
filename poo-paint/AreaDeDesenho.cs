@@ -108,22 +108,22 @@ namespace poo_paint
             {
                 if (yfinal > yinicial)
                 {
-                    AdicionaFigura(new Circulo(xinicial, yinicial, ((xfinal - xinicial)/2)));
+                    AdicionaFigura(new Circulo(xinicial, yinicial, ((xfinal - xinicial) / 2)));
                 }
                 else
                 {
-                    AdicionaFigura(new Circulo(xinicial, yfinal, (xfinal - xinicial)/2));
+                    AdicionaFigura(new Circulo(xinicial, yfinal, (xfinal - xinicial) / 2));
                 }
             }
             else
             {
                 if (yfinal > yinicial)
                 {
-                    AdicionaFigura(new Circulo(xfinal, yinicial, (xinicial - xfinal)/2));
+                    AdicionaFigura(new Circulo(xfinal, yinicial, (xinicial - xfinal) / 2));
                 }
                 else
                 {
-                    AdicionaFigura(new Circulo(xfinal, yfinal, (xinicial - xfinal)/2));
+                    AdicionaFigura(new Circulo(xfinal, yfinal, (xinicial - xfinal) / 2));
                 }
             }
 
@@ -160,19 +160,45 @@ namespace poo_paint
 
             if (abrirdialog.ShowDialog() == DialogResult.OK)
             {
-                string caminho = abrirdialog.FileName;
+                string linhaArquivo, caminho = abrirdialog.FileName;
                 StreamReader stream = new StreamReader(caminho);
-                string linha;
+                int p1, p2, p3, p4;
                 try
                 {
-                    while ((linha = stream.ReadLine()) != null)
+                    //this.CreateGraphics().Clear(AreaDeDesenho.ActiveForm.BackColor); 
+                    while ((linhaArquivo = stream.ReadLine()) != null)
                     {
-                        string parametro = "new " + linha;
-                        AdicionaFigura(parametro);
+                        switch (linhaArquivo)
+                        {
+                            case "Retangulo":
+                                p1 = Convert.ToInt32(stream.ReadLine());
+                                p2 = Convert.ToInt32(stream.ReadLine());
+                                p3 = Convert.ToInt32(stream.ReadLine());
+                                p4 = Convert.ToInt32(stream.ReadLine());
+                                AdicionaFigura(new Retangulo(p1, p2, p3, p4));
+                                break;
+                            case "Circulo":
+                                p1 = Convert.ToInt32(stream.ReadLine());
+                                p2 = Convert.ToInt32(stream.ReadLine());
+                                p3 = Convert.ToInt32(stream.ReadLine());
+                                AdicionaFigura(new Circulo(p1, p2, p3));
+                                break;
+                            case "Linha":
+                                p1 = Convert.ToInt32(stream.ReadLine());
+                                p2 = Convert.ToInt32(stream.ReadLine());
+                                p3 = Convert.ToInt32(stream.ReadLine());
+                                p4 = Convert.ToInt32(stream.ReadLine());
+                                AdicionaFigura(new Linha(p1, p2, p3, p4));
+                                break;
+                            default:
+                                throw new NotImplementedException();
+                                break;
+                        }
                     }
                 }
                 finally
                 {
+                    this.Invalidate();
                     stream.Close();
                 }
             }

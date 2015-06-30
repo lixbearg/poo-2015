@@ -31,7 +31,7 @@ namespace poo_paint
 
         public override string GeraLinhaArquivo()
         {
-            return "Retangulo(" + px + ", " + py + ", " + plargura + ", " + paltura + ")";
+            return "Retangulo\r\n" + px + "\r\n" + py + "\r\n" + plargura + "\r\n" + paltura;
         }
 
         public static void ZeraContador()

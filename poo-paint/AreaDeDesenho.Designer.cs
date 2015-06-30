@@ -38,23 +38,25 @@
             // 
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(282, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(212, 25);
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
             // 
             // comboxFerramenta
             // 
             this.comboxFerramenta.FormattingEnabled = true;
-            this.comboxFerramenta.Location = new System.Drawing.Point(13, 0);
+            this.comboxFerramenta.Location = new System.Drawing.Point(10, 0);
+            this.comboxFerramenta.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.comboxFerramenta.Name = "comboxFerramenta";
-            this.comboxFerramenta.Size = new System.Drawing.Size(121, 24);
+            this.comboxFerramenta.Size = new System.Drawing.Size(92, 21);
             this.comboxFerramenta.TabIndex = 1;
             // 
             // btnAbrir
             // 
-            this.btnAbrir.Location = new System.Drawing.Point(141, 0);
+            this.btnAbrir.Location = new System.Drawing.Point(106, 0);
+            this.btnAbrir.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnAbrir.Name = "btnAbrir";
-            this.btnAbrir.Size = new System.Drawing.Size(56, 23);
+            this.btnAbrir.Size = new System.Drawing.Size(42, 19);
             this.btnAbrir.TabIndex = 2;
             this.btnAbrir.Text = "Abrir";
             this.btnAbrir.UseVisualStyleBackColor = true;
@@ -62,9 +64,10 @@
             // 
             // btnSalvar
             // 
-            this.btnSalvar.Location = new System.Drawing.Point(203, 1);
+            this.btnSalvar.Location = new System.Drawing.Point(152, 0);
+            this.btnSalvar.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnSalvar.Name = "btnSalvar";
-            this.btnSalvar.Size = new System.Drawing.Size(56, 23);
+            this.btnSalvar.Size = new System.Drawing.Size(49, 19);
             this.btnSalvar.TabIndex = 3;
             this.btnSalvar.Text = "Salvar";
             this.btnSalvar.UseVisualStyleBackColor = true;
@@ -72,13 +75,14 @@
             // 
             // AreaDeDesenho
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(282, 253);
+            this.ClientSize = new System.Drawing.Size(212, 206);
             this.Controls.Add(this.btnSalvar);
             this.Controls.Add(this.btnAbrir);
             this.Controls.Add(this.comboxFerramenta);
             this.Controls.Add(this.toolStrip1);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "AreaDeDesenho";
             this.Text = "AreaDeDesenho";
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.Desenha);

@@ -28,7 +28,7 @@ namespace poo_paint
 
         public override string GeraLinhaArquivo()
         {
-            return "Circulo(" + px + ", " + py + ", " + praio + ")";
+            return "Circulo\r\n" + px + "\r\n" + py + "\r\n" + praio;
         }
 
         public static void ZeraContador()
