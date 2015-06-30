@@ -9,12 +9,13 @@ namespace poo_paint
 {
     class Program
     {
+        [STAThread]
         public static void Main(String[] args)
-        {
+        {         
             AreaDeDesenho area = new AreaDeDesenho();
             area.AdicionaFigura(new Retangulo(3, 4, 20, 50));
             area.AdicionaFigura(new Circulo(150, 45, 20));
             Application.Run(area);
-        }
+        }
     }    
 }

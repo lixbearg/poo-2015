@@ -26,6 +26,11 @@ namespace poo_paint
             return "circulo[x:" + px + ",y:" + py + ",raio:" + praio + "]";
         }
 
+        public override string GeraLinhaArquivo()
+        {
+            return "Circulo(" + px + ", " + py + ", " + praio + ")";
+        }
+
         public static void ZeraContador()
         {
             pcontador = 0;

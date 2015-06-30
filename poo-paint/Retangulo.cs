@@ -29,6 +29,11 @@ namespace poo_paint
             return "retangulo[x:" + px + ",y:" + py + ",l:" + plargura + ",a:" + paltura + "]";
         }
 
+        public override string GeraLinhaArquivo()
+        {
+            return "Retangulo(" + px + ", " + py + ", " + plargura + ", " + paltura + ")";
+        }
+
         public static void ZeraContador()
         {
             pcontador = 0;

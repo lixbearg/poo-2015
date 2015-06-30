@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,10 +17,17 @@ namespace poo_paint
         Figura[] figuras = new Figura[0];
         private int xinicial;
         private int yinicial;
+        private bool desenhando = false;
+        private string desenhos = "";
 
         public AreaDeDesenho()
         {
             InitializeComponent();
+            comboxFerramenta.Items.Add("Retangulo");
+            comboxFerramenta.Items.Add("Circulo");
+            comboxFerramenta.Items.Add("Linha");
+
+            comboxFerramenta.SelectedIndex = 0;
         }
 
         public void AdicionaFigura(Figura f)
@@ -37,6 +45,8 @@ namespace poo_paint
                 Figura f = new Figura();
                 f = this.figuras[i];
                 f.Desenha(g);
+                desenhos += f.GeraLinhaArquivo();
+                desenhos += Environment.NewLine;
             }
         }
 
@@ -44,34 +54,143 @@ namespace poo_paint
         {
             xinicial = e.X;
             yinicial = e.Y;
+            desenhando = true;
         }
 
         private void DesenhaCliqueFinal(object sender, MouseEventArgs e)
         {
-            if (e.X > xinicial)
-            {                
-                if (e.Y > yinicial)
+            if (comboxFerramenta.SelectedIndex == 0)
+            {
+                DesenhaCliqueRetangulo(e.X, e.Y);
+            }
+            else if (comboxFerramenta.SelectedIndex == 1)
+            {
+                DesenhaCliqueCirculo(e.X, e.Y);
+            }
+            else if (comboxFerramenta.SelectedIndex == 2)
+            {
+                DesenhaCliqueLinha(e.X, e.Y);
+            }
+
+            desenhando = false;
+        }
+
+        private void DesenhaCliqueRetangulo(int xfinal, int yfinal)
+        {
+            if (xfinal > xinicial)
+            {
+                if (yfinal > yinicial)
                 {
-                    AdicionaFigura(new Retangulo(xinicial, yinicial, (e.X - xinicial), (e.Y - yinicial)));
+                    AdicionaFigura(new Retangulo(xinicial, yinicial, (xfinal - xinicial), (yfinal - yinicial)));
                 }
                 else
                 {
-                    AdicionaFigura(new Retangulo(xinicial, e.Y, (e.X - xinicial), (yinicial - e.Y)));
+                    AdicionaFigura(new Retangulo(xinicial, yfinal, (xfinal - xinicial), (yinicial - yfinal)));
                 }
             }
             else
             {
-                if (e.Y > yinicial)
+                if (yfinal > yinicial)
                 {
-                    AdicionaFigura(new Retangulo(e.X, yinicial, (xinicial - e.X), (e.Y - yinicial)));
+                    AdicionaFigura(new Retangulo(xfinal, yinicial, (xinicial - xfinal), (yfinal - yinicial)));
                 }
                 else
                 {
-                    AdicionaFigura(new Retangulo(e.X, e.Y, (xinicial - e.X), (yinicial - e.Y)));
+                    AdicionaFigura(new Retangulo(xfinal, yfinal, (xinicial - xfinal), (yinicial - yfinal)));
+                }
+            }
+            this.Invalidate();
+        }
+
+        private void DesenhaCliqueCirculo(int xfinal, int yfinal)
+        {
+            if (xfinal > xinicial)
+            {
+                if (yfinal > yinicial)
+                {
+                    AdicionaFigura(new Circulo(xinicial, yinicial, ((xfinal - xinicial)/2)));
+                }
+                else
+                {
+                    AdicionaFigura(new Circulo(xinicial, yfinal, (xfinal - xinicial)/2));
+                }
+            }
+            else
+            {
+                if (yfinal > yinicial)
+                {
+                    AdicionaFigura(new Circulo(xfinal, yinicial, (xinicial - xfinal)/2));
+                }
+                else
+                {
+                    AdicionaFigura(new Circulo(xfinal, yfinal, (xinicial - xfinal)/2));
                 }
             }
 
             this.Invalidate();
+        }
+
+        private void DesenhaCliqueLinha(int xfinal, int yfinal)
+        {
+            AdicionaFigura(new Linha(xinicial, yinicial, xfinal, yfinal));
+            this.Invalidate();
+        }
+
+        private void DesenhaMove(object sender, MouseEventArgs e)
+        {
+            if ((desenhando == true) & (comboxFerramenta.SelectedIndex == 0))
+            {
+                DesenhaCliqueRetangulo(e.X, e.Y);
+            }
+            else if ((desenhando == true) & (comboxFerramenta.SelectedIndex == 1))
+            {
+                DesenhaCliqueCirculo(e.X, e.Y);
+            }
+            else if ((desenhando == true) & (comboxFerramenta.SelectedIndex == 2))
+            {
+                DesenhaCliqueLinha(e.X, e.Y);
+            }
+        }
+
+        private void btnAbrir_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog abrirdialog = new OpenFileDialog();
+            abrirdialog.Filter = "Arquivos de Texto|*.txt";
+            abrirdialog.Title = "Selecione um arquivo para abrir";
+
+            if (abrirdialog.ShowDialog() == DialogResult.OK)
+            {
+                string caminho = abrirdialog.FileName;
+                StreamReader stream = new StreamReader(caminho);
+                string linha;
+                try
+                {
+                    while ((linha = stream.ReadLine()) != null)
+                    {
+                        string parametro = "new " + linha;
+                        AdicionaFigura(parametro);
+                    }
+                }
+                finally
+                {
+                    stream.Close();
+                }
+            }
+        }
+
+        private void btnSalvar_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog salvardialog = new SaveFileDialog();
+            salvardialog.Filter = "Arquivo de texto|*.txt";
+            salvardialog.FileName = "Desenho";
+            salvardialog.Title = "Salvar desenhos";
+            if (salvardialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                string caminho = salvardialog.FileName;
+                StreamWriter stream = new StreamWriter(File.Create(caminho));
+                stream.Write(desenhos);
+                stream.Dispose();
+            }
         }
     }
 }

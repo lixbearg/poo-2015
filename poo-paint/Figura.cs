@@ -17,6 +17,11 @@ namespace poo_paint
             return "figura[x:" + px + ",y:" + py + "]";
         }
 
+        public virtual string GeraLinhaArquivo()
+        {
+            return "Figura(x, y, l, a)";
+        }
+
         public virtual void Desenha(Graphics g)
         {
         }
