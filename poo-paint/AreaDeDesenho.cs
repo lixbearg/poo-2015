@@ -138,18 +138,18 @@ namespace poo_paint
 
         private void DesenhaMove(object sender, MouseEventArgs e)
         {
-            if ((desenhando == true) & (comboxFerramenta.SelectedIndex == 0))
-            {
-                DesenhaCliqueRetangulo(e.X, e.Y);
-            }
-            else if ((desenhando == true) & (comboxFerramenta.SelectedIndex == 1))
-            {
-                DesenhaCliqueCirculo(e.X, e.Y);
-            }
-            else if ((desenhando == true) & (comboxFerramenta.SelectedIndex == 2))
-            {
-                DesenhaCliqueLinha(e.X, e.Y);
-            }
+            //if ((desenhando == true) & (comboxFerramenta.SelectedIndex == 0))
+            //{
+            //    DesenhaCliqueRetangulo(e.X, e.Y);
+            //}
+            //else if ((desenhando == true) & (comboxFerramenta.SelectedIndex == 1))
+            //{
+            //    DesenhaCliqueCirculo(e.X, e.Y);
+            //}
+            //else if ((desenhando == true) & (comboxFerramenta.SelectedIndex == 2))
+            //{
+            //    DesenhaCliqueLinha(e.X, e.Y);
+            //}
         }
 
         private void btnAbrir_Click(object sender, EventArgs e)
@@ -165,7 +165,8 @@ namespace poo_paint
                 int p1, p2, p3, p4;
                 try
                 {
-                    //this.CreateGraphics().Clear(AreaDeDesenho.ActiveForm.BackColor); 
+                    figuras = new Figura[0];
+                    qtdfiguras = 0;
                     while ((linhaArquivo = stream.ReadLine()) != null)
                     {
                         switch (linhaArquivo)
@@ -191,10 +192,13 @@ namespace poo_paint
                                 AdicionaFigura(new Linha(p1, p2, p3, p4));
                                 break;
                             default:
-                                throw new NotImplementedException();
-                                break;
+                                throw new Exception();
                         }
                     }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("O arquivo selecionado é inválido.", "Erro");
                 }
                 finally
                 {
